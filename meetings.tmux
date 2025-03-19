@@ -3,21 +3,19 @@
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$CURRENT_DIR/scripts/helpers.sh"
 
-ALERT_IF_IN_NEXT_MINUTES=30
-ALERT_POPUP_BEFORE_SECONDS=10
-NERD_FONT_FREE="󱁕 "
-NERD_FONT_MEETING="󰤙"
+ALERT_IF_IN_NEXT_MINUTES=$(get_tmux_option "@tmux-meetings-alert-minutes" "30")
+ALERT_POPUP_BEFORE_SECONDS=$(get_tmux_option "@tmux-meetings-popup-seconds" "10")
+ICON_FREE=$(get_tmux_option "@tmux-meetings-icon-free" "󱁕 ")
+ICON_MEETING=$(get_tmux_option "@tmux-meetings-icon-meeting" "󰤙")
 
-get_calendar() {
-  calendars=$(get_tmux_option "@tmux-meetings-calendars")
-}
+CALENDARS=$(get_tmux_option "@tmux-meetings-calendars")
+if [ -n "$CALENDARS" ]; then
+    calendar_option="-ic $CALENDARS"
+else
+    calendar_option=""
+fi
 
 get_attendees() {
-    if [ -n "$calendars" ]; then
-        calendar_option="-ic $calendars"
-    else
-        calendar_option=""
-    fi
 	attendees=$(
 	icalBuddy \
 		--includeEventProps "attendees" \
@@ -43,12 +41,6 @@ parse_attendees() {
 }
 
 get_next_meeting() {
-    if [ -n "$calendars" ]; then
-        calendar_option="-ic $calendars"
-    else
-        calendar_option=""
-    fi
-
 	next_meeting=$(icalBuddy \
         --includeEventProps "title,datetime" \
         --propertyOrder "datetime,title" \
@@ -68,11 +60,6 @@ get_next_next_meeting() {
     end_time_nnm=$(date -j -f "%I:%M %p" "$end_time_nnm" +"%H:%M" 2>/dev/null)
 	end_timestamp=$(date +"%Y-%m-%d ${end_time_nnm}:01 %z")
 	tonight=$(date +"%Y-%m-%d 23:59:00 %z")
-    if [ -n "$calendars" ]; then
-        calendar_option="-ic $calendars"
-    else
-        calendar_option=""
-    fi
     next_meeting=$(icalBuddy \
 		--includeEventProps "title,datetime" \
 		--propertyOrder "datetime,title" \
@@ -103,18 +90,13 @@ calculate_times(){
 	# Convert the time to 24-hour format
 	formatted_time=$(date -j -f "%I:%M %p" "$time" +"%H:%M" 2>/dev/null)
 
-	epoc_meeting=$(date -j -f "%H:%M" "$formatted_time" +%s 2>/dev/null)
+	epoc_meeting=$(date -j -f "%H:%M:%S" "$formatted_time:00" +%s 2>/dev/null)
 	epoc_now=$(date +%s)
 	epoc_diff=$((epoc_meeting - epoc_now))
 	minutes_till_meeting=$((epoc_diff/60))
 }
 
 display_popup() {
-    if [ -n "$calendars" ]; then
-        calendar_option="-ic $calendars"
-    else
-        calendar_option=""
-    fi
 	tmux display-popup \
 		-S "fg=#eba0ac" \
 		-w50% \
@@ -134,15 +116,13 @@ display_popup() {
 }
 
 print_tmux_status() {
-    echo $minutes_till_meeting
 	if [[ $minutes_till_meeting -lt $ALERT_IF_IN_NEXT_MINUTES \
 		&& $minutes_till_meeting -gt -60 ]]; then
-		echo "$NERD_FONT_MEETING \
+		echo "$ICON_MEETING \
 			$time $title ($minutes_till_meeting minutes)"
 	else
-		echo "$NERD_FONT_FREE"
+		echo "$ICON_FREE"
 	fi
-
 	if [[ $epoc_diff -gt $ALERT_POPUP_BEFORE_SECONDS && epoc_diff -lt $ALERT_POPUP_BEFORE_SECONDS+10 ]]; then
 		display_popup
 	fi

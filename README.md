@@ -28,11 +28,15 @@ Add `#{meetings}` somewhere in the right status line:
 ```
 set-option -g status-right "#{meetings}"
 ```
-then you will see your next meeting in the status line: ` 14:00 - 1:1 Manager`
+then you will see your next meeting in the status line: `󰤙 14:00 - 1:1 Manager`
 
 ## Customization
 The plugin could be customized with:
 * `set-option -g @tmux-meetings-calendars "your.email@addre.ss"` - Set up the email address to include, comma delimited
+* `set-option -g @tmux-meetings-alert-minutes 30` - How long before the meeting to show in the status line
+* `set-option -g @tmux-meetings-popup-seconds 10` - How long before the meeting to show a tmux popup
+* `set-option -g @tmux-meetings-icon-free "󱁕 "`   - Icon to display when free
+* `set-option -g @tmux-meetings-icon-meeting "󰤙"` - Icon to display for a meeting
 
 ## License
 tmux-meetings plugin is released under the [MIT License](https://opensource.org/licenses/MIT).
