@@ -3,7 +3,7 @@
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$CURRENT_DIR/scripts/helpers.sh"
 
-ALERT_IF_IN_NEXT_MINUTES=$(get_tmux_option "@tmux-meetings-alert-minutes" "30")
+ALERT_IF_IN_NEXT_MINUTES=$(get_tmux_option "@tmux-meetings-alert-minutes" "15")
 ALERT_POPUP_BEFORE_SECONDS=$(get_tmux_option "@tmux-meetings-popup-seconds" "10")
 ICON_FREE=$(get_tmux_option "@tmux-meetings-icon-free" "󱁕 ")
 ICON_MEETING=$(get_tmux_option "@tmux-meetings-icon-meeting" "󰤙")
