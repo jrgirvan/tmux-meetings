@@ -41,7 +41,7 @@ then you will see your next meeting in the status line: `󰤙 14:00 - 1:1 Manage
 ## Customization
 The plugin could be customized with:
 * `set-option -g @tmux-meetings-calendars "your.email@addre.ss"` - Set up the email address to include, comma delimited
-* `set-option -g @tmux-meetings-alert-minutes 30` - How long before the meeting to show in the status line
+* `set-option -g @tmux-meetings-alert-minutes 15` - How long before the meeting to show in the status line
 * `set-option -g @tmux-meetings-popup-seconds 10` - How long before the meeting to show a tmux popup
 * `set-option -g @tmux-meetings-icon-free "󱁕 "`   - Icon to display when free
 * `set-option -g @tmux-meetings-icon-meeting "󰤙"` - Icon to display for a meeting
