@@ -71,6 +71,8 @@ source -F "#{TMUX_PLUGIN_MANAGER_PATH}/tmux/utils/status_module.conf"
 run '#{TMUX_PLUGIN_MANAGER_PATH}tmux/catppuccin.tmux'
 source -F "#{d:current_file}/meetings.conf"
 # ...
+set -g status-right "#{E:@catppuccin_status_meetings}"
+# ...
 
 ```
 
