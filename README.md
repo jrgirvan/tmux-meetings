@@ -46,7 +46,7 @@ The plugin could be customized with:
 * `set-option -g @tmux-meetings-icon-free "󱁕 "`   - Icon to display when free
 * `set-option -g @tmux-meetings-icon-meeting "󰤙"` - Icon to display for a meeting
 
-## Catppuccin/tmux
+## [catppuccin/tmux](https://github.com/catppuccin/tmux)
 
 You can add this as a [status line module](https://github.com/catppuccin/tmux/blob/main/docs/tutorials/02-custom-status.md)
 
