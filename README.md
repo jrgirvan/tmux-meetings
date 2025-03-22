@@ -76,6 +76,10 @@ set -g status-right "#{E:@catppuccin_status_meetings}"
 
 ```
 
+## Acknowledgments
+
+Special thanks to GitHub user [omerxx](https://github.com/omerxx) for the core icalBuddy bash script that this plugin builds upon.
+
 ## License
 
 tmux-meetings plugin is released under the [MIT License](https://opensource.org/licenses/MIT).
